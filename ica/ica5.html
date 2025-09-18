@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .card-header {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+
+        }
+        h3 {
+            text-align: center;
+        }
+        button{
+            height: 2rem;
+            width: 10rem;
+            border-radius: 20px;
+            border: 2px, solid #000000;
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 16px;
+            max-width: 300px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .card-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .expand-btn{
+            background:none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .card-content{
+            margin-top: 12px;
+
+        }
+        .details-hidden{
+            display:none;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+    <div class="card-header">
+    <h3>Community Garden Project</h3>
+    <button class="expand-btn" aria-label="Expand card">+</button>
+  </div>
+  <div class="card-content">
+    <p class="summary">Join neighbors in creating a shared growing space...</p>
+    <div class="details hidden">
+      <p>Meeting every Saturday at 10am. Tools provided. All skill levels welcome.</p>
+      <p>Contact: garden@community.org</p>
+    </div>
+  </div>
+</div>
+    <script>
+        let info = false;
+
+        const expandBtn = document.querySelector('.expand-btn');
+        const details = document.querySelector('.card-content');
+
+        expandBtn.addEventListener('click', showinfo);
+
+        function showInfor() {
+            //console.log("hi!");
+            //alert("this is an alert");
+            if (info == false) {
+                details.style.display = "block";
+                info = true;
+            }
+            else {
+                //what we do if info is true abd the info is there?
+                details.style.display = "none";
+                info = false;
+            }
+        }
+        
+
+        // Your code here
+    </script>
+</body>
+</html>

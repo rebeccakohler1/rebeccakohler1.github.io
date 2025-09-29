@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Resource — Community Food Pantry</title>
+<style>
+  :root{--gap:16px;--max-width:1000px;--muted:#666}
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;margin:20px;display:flex;justify-content:center}
+  .app{width:100%;max-width:var(--max-width)}
+  /* Resource page grid:
+     areas: header, breadcrumb, content, sidebar, related, footer
+  */
+  .resource-grid{display:grid;gap:var(--gap);
+    grid-template-columns:1fr 320px;
+    grid-template-rows:auto auto 1fr auto;
+    grid-template-areas:
+      "header header"
+      "breadcrumb breadcrumb"
+      "content sidebar"
+      "related related"
+      "footer footer";
+  }
+  header{grid-area:header}
+  .breadcrumb{grid-area:breadcrumb;color:var(--muted);font-size:.95rem}
+  .content{grid-area:content;padding:16px;background:#fff;border-radius:10px}
+  .sidebar{grid-area:sidebar;padding:16px;background:#fff;border-radius:10px}
+  .related{grid-area:related;padding:16px;background:#fff;border-radius:10px;display:flex;gap:8px;flex-wrap:wrap}
+  footer{grid-area:footer;text-align:center;color:var(--muted);padding:8px}
+
+  @media (max-width:880px){
+    .resource-grid{grid-template-columns:1fr;grid-template-areas:
+      "header"
+      "breadcrumb"
+      "content"
+      "sidebar"
+      "related"
+      "footer";}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <section class="resource-grid" aria-label="Resource detail grid">
+    <header>
+      <h1>Community Food Pantry</h1>
+      <p>Helping neighbors since 2002</p>
+    </header>
+
+    <nav class="breadcrumb" aria-label="Breadcrumbs">
+      <a href="index.html">Home</a> › <a href="index.html#resources">Resources</a> › Community Food Pantry
+    </nav>
+
+    <article class="content" role="article">
+      <h2>What they offer</h2>
+      <p>Open weekdays 10am–2pm. Emergency boxes and weekly meal pickup. Phone intake available.</p>
+      <h3>How to access</h3>
+      <p>Walk-in or call the intake line. ID required for weekly boxes.</p>
+    </article>
+
+    <aside class="sidebar" aria-labelledby="sideTitle">
+      <h2 id="sideTitle">Contact & quick facts</h2>
+      <p>Phone: (555) 555-5555</p>
+      <p>Address: 123 Main St.</p>
+      <p><a href="#">Get directions</a></p>
+    </aside>
+
+    <section class="related" aria-label="Related resources">
+      <h2 style="width:100%;">Related</h2>
+      <a href="resource.html?id=5" style="min-width:180px">Senior Meals Program</a>
+      <a href="resource.html?id=2" style="min-width:180px">Free Health Clinic</a>
+      <a href="resource.html?id=4" style="min-width:180px">Legal Aid Hotline</a>
+    </section>
+
+    <footer>
+      <small>© Community Connect</small>
+    </footer>
+  </section>
+</div>
+</body>
+</html>

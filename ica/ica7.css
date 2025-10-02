@@ -1,23 +1,21 @@
-/* Theme styles */
 body.light {
     background: white;
     color: black;
   }
   
-  body.dark {
+body.dark {
     background: black;
     color: white;
   }
-  
-  /* Gallery layout */
-  .gallery-grid {
+
+.gallery-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 1rem;
     margin-top: 1rem;
   }
   
-  .photo-card {
+.photo-card {
     background: #ddd;
     height: 100px;
     display: flex;
@@ -25,32 +23,30 @@ body.light {
     justify-content: center;
   }
   
-  /* Filter buttons */
-  .gallery-nav {
+.gallery-nav {
     margin-top: 1rem;
   }
   
-  .gallery-nav button {
+.gallery-nav button {
     margin-right: 0.5rem;
   }
 
-  /* Style ALL buttons */
 button {
-    padding: 0.75rem 1.5rem;   /* bigger clickable area */
-    font-size: 1rem;           /* larger text */
+    padding: 0.75rem 1.5rem;  
+    font-size: 1rem;           
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    background: blueviolet;       /* nice blue */
+    background: blueviolet;   
     color: white;
     transition: background 0.3s;
   }
   
-  button:hover {
-    background: black;       /* darker blue on hover */
+button:hover {
+    background: purple;      /* diff purple on the hover*/
   }
 
-  /* Default button style */
+  /* default button style */
 button {
     padding: 0.75rem 1.5rem;
     font-size: 1rem;
@@ -62,22 +58,22 @@ button {
     transition: background 0.3s, color 0.3s;
   }
   
-  button:hover {
+button:hover {
     background: blueviolet;
   }
   
-  button:active {
+button:active {
     background: #004f88;
   }
   
   /* Dark theme button override */
-  body.dark button {
-    background: blueviolet;   /* buttons turn white */
-    color: black;        /* text stays visible */
+body.dark button {
+    background: blueviolet;   
+    color: black;        
   }
   
-  body.dark button:hover {
-    background: #ddd;    /* subtle hover effect */
+body.dark button:hover {
+    background: #ddd;   
   }
   
   

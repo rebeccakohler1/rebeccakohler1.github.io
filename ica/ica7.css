@@ -1,0 +1,83 @@
+/* Theme styles */
+body.light {
+    background: white;
+    color: black;
+  }
+  
+  body.dark {
+    background: black;
+    color: white;
+  }
+  
+  /* Gallery layout */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .photo-card {
+    background: #ddd;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Filter buttons */
+  .gallery-nav {
+    margin-top: 1rem;
+  }
+  
+  .gallery-nav button {
+    margin-right: 0.5rem;
+  }
+
+  /* Style ALL buttons */
+button {
+    padding: 0.75rem 1.5rem;   /* bigger clickable area */
+    font-size: 1rem;           /* larger text */
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background: blueviolet;       /* nice blue */
+    color: white;
+    transition: background 0.3s;
+  }
+  
+  button:hover {
+    background: black;       /* darker blue on hover */
+  }
+
+  /* Default button style */
+button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background: blueviolet;
+    color: white;
+    transition: background 0.3s, color 0.3s;
+  }
+  
+  button:hover {
+    background: blueviolet;
+  }
+  
+  button:active {
+    background: #004f88;
+  }
+  
+  /* Dark theme button override */
+  body.dark button {
+    background: blueviolet;   /* buttons turn white */
+    color: black;        /* text stays visible */
+  }
+  
+  body.dark button:hover {
+    background: #ddd;    /* subtle hover effect */
+  }
+  
+  

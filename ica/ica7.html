@@ -14,9 +14,9 @@
     <header class="gallery-header">Photo Gallery</header>
 
     <nav class="gallery-nav">
-        <button>All</button>
-        <button>Nature</button>
-        <button>Architecture</button>
+        <button data-filter="all">All</button>
+        <button data-filter="nature">Nature</button>
+        <button data-filter="architecture">Architecture</button>
     </nav>
 
     <main class="gallery-grid">
@@ -28,49 +28,44 @@
         <div class="photo-card" data-category="nature">Photo 5</div>
     </main>
 
-    <aside class="gallery-sidebar">
-       <!-- can put whatever here if needed - more info -->
-    </aside>
+    <aside class="gallery-sidebar"></aside>
   </div>
 
   <script>
     const themeBtn = document.querySelector('#theme');
+    const body = document.body;
+    const navButtons = document.querySelectorAll('.gallery-nav button');
+    const photos = document.querySelectorAll('.photo-card');
+
+    const savedTheme = localStorage.getItem('theme');
+    if(savedTheme) body.dataset.theme = savedTheme;
 
     themeBtn.addEventListener('click', () => {
-        let currentTheme = document.body.className || 'light';
-        let newTheme = (currentTheme === 'light') ? 'dark' : 'light';
-        setTheme(newTheme);
+      const newTheme = body.dataset.theme === 'dark' ? 'light' : 'dark';
+      body.dataset.theme = newTheme;
+      localStorage.setItem('theme', newTheme);
     });
 
-    function setTheme(theme) {
-        localStorage.setItem('userTheme', theme);
-        document.body.className = theme;
-    }
-
-    window.addEventListener('load', function() {
-        const savedTheme = localStorage.getItem('userTheme') || 'light';
-        document.body.className = savedTheme;
-    });
-
-    const filterButtons = document.querySelectorAll('.gallery-nav button');
-    const photoCards = document.querySelectorAll('.photo-card');
-
-    filterButtons.forEach(button => {
-        button.addEventListener('click', (event) => {
-            const filterValue = event.target.textContent.toLowerCase();
-        filterPhotos(filterValue);
+    navButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter;
+        photos.forEach(photo => {
+          photo.style.display = (filter === 'all' || photo.dataset.category === filter) ? '' : 'none';
+        });
+        localStorage.setItem('lastFilter', filter);
       });
     });
 
-    function filterPhotos(category) {
-        photoCards.forEach(card => {
-            if (category === 'all' || card.dataset.category === category) {
-                card.style.display = 'block';
-        } else {
-            card.style.display = 'none';
-        }
+    const lastFilter = localStorage.getItem('lastFilter');
+    if(lastFilter) {
+      navButtons.forEach(btn => {
+        if(btn.dataset.filter === lastFilter) btn.click();
       });
     }
+
+    window.addEventListener('beforeunload', () => {
+      localStorage.setItem('lastFilter', localStorage.getItem('lastFilter') || 'all');
+    });
   </script>
 </body>
 </html>

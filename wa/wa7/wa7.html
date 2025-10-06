@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="ica7.css">
+  <title>Photo Gallery</title>
+</head>
+<body data-theme="light">
+
+  <button id="theme">Toggle Theme</button>
+  <button id="clearStorage">Clear Preferences</button>
+
+  <div class="gallery-container">
+    <header class="gallery-header">Photo Gallery</header>
+
+    <nav class="gallery-nav">
+      <button data-filter="all">All</button>
+      <button data-filter="nature">Nature</button>
+      <button data-filter="architecture">Architecture</button>
+    </nav>
+
+    <main class="gallery-grid">
+      <div class="photo-card featured" data-category="nature">Featured Photo</div>
+      <div class="photo-card" data-category="nature">Photo 1</div>
+      <div class="photo-card" data-category="architecture">Photo 2</div>
+      <div class="photo-card" data-category="nature">Photo 3</div>
+      <div class="photo-card" data-category="architecture">Photo 4</div>
+      <div class="photo-card" data-category="nature">Photo 5</div>
+    </main>
+
+    <aside class="gallery-sidebar"></aside>
+  </div>
+
+  <script src="ica7.js"></script>
+</body>
+</html>

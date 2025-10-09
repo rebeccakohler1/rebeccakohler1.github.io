@@ -1,3 +1,5 @@
+console.log("ica7.js loaded!");
+
 const themeBtn = document.querySelector('#theme');
 const clearBtn = document.querySelector('#clearStorage');
 const body = document.body;
@@ -11,7 +13,8 @@ const lastFilter = localStorage.getItem('lastFilter');
 
 themeBtn.addEventListener('click', () => {
   const newTheme = body.dataset.theme === 'dark' ? 'light' : 'dark';
-  body.dataset.theme = newTheme;
+  body.dataset.theme = newTheme; 
+  console.log("themeChanged");
   localStorage.setItem('theme', newTheme);
 });
 

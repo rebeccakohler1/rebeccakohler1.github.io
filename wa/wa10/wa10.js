@@ -1,6 +1,5 @@
 // Select DOM elements
 const newQuoteBtn = document.querySelector("#js-new-quote");
-const tweetBtn    = document.querySelector("#js-tweet");
 const quoteText   = document.querySelector("#js-quote-text");
 const authorText  = document.querySelector("#js-author-text");
 
@@ -16,10 +15,12 @@ const endpoint = "https://quote-generator-api-six.vercel.app/api/quotes/random";
 // Fetch a new quote
 async function getQuote() {
   try {
+    // Disable button while loading
     newQuoteBtn.disabled = true;
     quoteText.textContent = "Loading…";
     authorText.textContent = "";
 
+    // Fetch quote from API
     const response = await fetch(endpoint);
     if (!response.ok) throw new Error(response.statusText);
 
@@ -27,6 +28,7 @@ async function getQuote() {
     const quote  = json.quote;
     const author = json.category || "Unknown";
 
+    // Display quote
     displayQuote(quote, author);
     currentQuote.text   = quote;
     currentQuote.author = author;
@@ -36,6 +38,7 @@ async function getQuote() {
     quoteText.textContent  = "Failed to fetch a new quote.";
     authorText.textContent = "";
   } finally {
+    // Re-enable button
     newQuoteBtn.disabled = false;
   }
 }
@@ -46,15 +49,8 @@ function displayQuote(quote, author) {
   authorText.textContent = `– ${author}`;
 }
 
-// Share quote on Twitter
-function shareQuote() {
-  const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`"${currentQuote.text}" – ${currentQuote.author}`)}`;
-  window.open(twitterUrl, "_blank");
-}
-
-// Event listeners
+// Event listener for button
 newQuoteBtn.addEventListener("click", getQuote);
-tweetBtn.addEventListener("click", shareQuote);
 
 // Load a quote immediately on page load
 getQuote();

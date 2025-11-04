@@ -11,7 +11,7 @@ let currentQuote = {
 };
 
 // API endpoint (CORS-friendly)
-const endpoint = "https://quote-generator-api-six.vercel.app/api/quotes/random";
+const endpoint = "https://trivia.cyberwisp.com/getrandomchristmasquestion";
 
 // Fetch a new quote
 async function getQuote() {

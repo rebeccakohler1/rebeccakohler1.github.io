@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style> 
+    /* =========================================
+   EMERALD BUTTON
+========================================= */
+
+.emerald-button {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  font-family: "Montserrat", Helvetica, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 0.75em 1.25em;
+  padding-right: 3.5em;
+  background: transparent;
+  color: #fed8ff; /* pale emerald-tinted text */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: filter 0.2s ease, transform 0.2s ease;
+  filter: brightness(0.95);
+  border: none;
+}
+
+/* Emerald animated border */
+.emerald-button::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+
+  /* EMERALD GRADIENT – smooth, multi-shade green */
+  background: linear-gradient(
+    90deg,
+    #f705de,  /* deep forest */
+    #f53de2,  /* rich emerald */
+    #f781eb,  /* bright emerald */
+    #f5baef,  /* light jade */
+    #f781eb,  /* repeat emerald */
+    #f53de2,  /* deep emerald */
+    #f705de   /* forest */
+  );
+
+  z-index: -1;
+  border-radius: 0px;
+  background-size: 300% 100%;
+  transition: background-position 0.8s ease;
+
+  /* Mask to create the hollow border effect */
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: destination-out;
+
+  padding: 2px;
+  box-sizing: border-box;
+}
+
+/* Animate emerald gradient */
+.emerald-button:hover::before {
+  background-position: 100% 0;
+}
+
+/* Press effect */
+.emerald-button:active {
+  transform: translateY(2px) scale(0.98);
+  filter: brightness(0.85);
+}
+
+/* Arrow – emerald glow version */
+.emerald-button::after {
+  content: "\2794";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1em;
+
+  color: #6fffc0; /* bright mint-emerald */
+  transition: transform 0.3s ease, color 0.3s ease;
+  pointer-events: none;
+}
+
+/* Arrow animation + deeper emerald on hover */
+.emerald-button:hover::after {
+  animation: bounceright 0.4s alternate ease-in-out infinite;
+  color: #2f9e6f; /* emerald */
+}
+
+@keyframes bounceright {
+  from { transform: translateX(0); }
+  to   { transform: translateX(4px); }
+}
+
+@media (max-width: 600px) {
+  .emerald-button {
+    font-size: 13px;
+    letter-spacing: 1px;
+    padding: 0.65em 1em;
+    padding-right: 3em;
+  }
+
+  .emerald-button::after {
+    right: 0.75em;
+    font-size: 0.95em;
+  }
+}
+
+.emerald-heading {
+  background: linear-gradient(
+    90deg,
+    #f705de, /* deep forest */
+    #f53de2, /* emerald */
+    #f781eb, /* bright emerald */
+    #f5baef  /* jade */
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 700;
+  letter-spacing: 1px;
+
+}
+
+
+html,
+body {
+  background-color: #111;
+
+  padding-bottom: 40vh;
+
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Montserrat", Helvetica, sans-serif;
+}
+
+.centered-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem; /* spacing between the buttons */
+}
+
+</style>
+<body>
+    
+<!-- Container centers the buttons -->
+<div class="centered-buttons">
+
+  
+  <h1 class="emerald-heading">Pink Heading</h1>
+  <!-- Link styled as a button that opens overlay -->
+  <a href="#about-overlay"
+     role="button"
+     class="emerald-button"
+     aria-haspopup="dialog"
+     aria-controls="about-overlay"
+     aria-expanded="false"
+     id="about-button">
+   Pink Button
+  </a>
+
+  <!-- Native button version with same ARIA setup -->
+  <button
+    class="emerald-button"
+    id="about-button"
+    aria-haspopup="dialog"
+    aria-controls="about-overlay"
+    aria-expanded="false">
+   Pink Button
+  </button>
+
+</div>
+
+<!-- 
+  Modal structure (hidden by default, shown via JS)
+
+  <div id="about-overlay"
+       role="dialog"
+       aria-modal="true"
+       aria-labelledby="about-overlay-title"
+       hidden>
+    <h2 id="about-overlay-title">About the Exhibit</h2>
+
+  </div>
+-->
+
+</body>
+</html>

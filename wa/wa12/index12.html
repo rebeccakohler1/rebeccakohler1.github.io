@@ -1,0 +1,241 @@
+<!-- API KEY = 6ccc336b -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Entertainment Systems: Netflix Recommendation Engine</title>
+
+  <style>
+    body {
+      font-family: Bebas Neue;
+      margin: 0;
+      background: #141414;
+      color: #e5e5e5;
+    }
+
+    header {
+      background: #000;
+      color: #e50914;
+      text-align: center;
+      padding: 1rem;
+      font-size: 1.6rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 900px;
+      margin: 1.5rem auto;
+      text-align: center;
+    }
+
+    input {
+      padding: 10px;
+      width: 70%;
+      border: none;
+      outline: none;
+      border-radius: 4px;
+      background: #333;
+      color: #fff;
+    }
+
+    button {
+      padding: 10px 15px;
+      margin: 5px;
+      background: #e50914;
+      border: none;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: Bebas Neue;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #b20710;
+    }
+
+    .movie-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .movie {
+      background: #181818;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+      padding: 0.5rem;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .movie img {
+      width: 100%;
+      border-radius: 6px;
+    }
+
+    .error {
+      color: #e50914;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    #details {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: #181818;
+      border-radius: 8px;
+      display: none;
+    }
+
+    #details img {
+      width: 200px;
+      border-radius: 8px;
+    }
+
+    #details h2 {
+      color: #e50914;
+    }
+  </style>
+</head>
+
+<body>
+  <header>Entertainment Systems: Netflix Recommendation Engine</header>
+
+  <div class="container">
+    <input type="text" id="searchInput" placeholder="Search for a movie or show..." />
+    <button id="searchBtn">Search</button>
+
+    <div id="errorMsg" class="error"></div>
+    <div id="results" class="movie-list"></div>
+
+    <div id="details">
+      <h2 id="detailTitle"></h2>
+      <img id="detailPoster">
+      <p id="detailPlot"></p>
+      <h3 style="color:#e50914;">More Like This</h3>
+      <div id="recommendations" class="movie-list"></div>
+    </div>
+
+    <hr style="margin: 2rem 0; border-color: #333" />
+    <h2 style="color: #e50914;">My List</h2>
+    <div id="favorites" class="movie-list"></div>
+    <button onclick="clearFavorites()">Clear My List</button>
+  </div>
+
+  <script>
+    const API_KEY = "6ccc336b";
+    const resultsDiv = document.getElementById('results');
+    const favoritesDiv = document.getElementById('favorites');
+    const errorMsg = document.getElementById('errorMsg');
+
+    document.getElementById('searchBtn').addEventListener('click', searchMovies);
+
+    function searchMovies() {
+      const query = document.getElementById('searchInput').value.trim();
+      if (!query) {
+        errorMsg.textContent = "Please enter a title to search.";
+        return;
+      }
+
+      errorMsg.textContent = "Loading...";
+      fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=${encodeURIComponent(query)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.Response === "False") {
+            errorMsg.textContent = "No results found.";
+            resultsDiv.innerHTML = "";
+            return;
+          }
+
+          errorMsg.textContent = "";
+          displayMovies(data.Search, resultsDiv, false);
+        })
+        .catch(() => {
+          errorMsg.textContent = "Failed to fetch data.";
+        });
+    }
+
+    function displayMovies(movies, container, isFavoriteList) {
+      container.innerHTML = "";
+      movies.forEach(movie => {
+        const div = document.createElement('div');
+        div.classList.add('movie');
+        div.innerHTML = `
+          <img src="${movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/150'}" alt="${movie.Title}">
+          <h4>${movie.Title} (${movie.Year})</h4>
+        `;
+
+        // show details + recommendations
+        div.addEventListener('click', () => loadDetails(movie.imdbID));
+
+        container.appendChild(div);
+      });
+    }
+
+    // Load detailed movie info
+    function loadDetails(id) {
+      fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&i=${id}&plot=full`)
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('details').style.display = "block";
+          document.getElementById('detailTitle').textContent = `${data.Title} (${data.Year})`;
+          document.getElementById('detailPoster').src = data.Poster;
+          document.getElementById('detailPlot').textContent = data.Plot;
+
+          loadRecommendations(data.Genre);
+        });
+    }
+
+    // load "more like this" recommendations
+    function loadRecommendations(genres) {
+      const firstGenre = genres.split(",")[0].trim(); // use the first genre
+
+      fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=${encodeURIComponent(firstGenre)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.Response === "False") {
+            document.getElementById("recommendations").innerHTML = "<p>No recommendations available.</p>";
+            return;
+          }
+          displayMovies(data.Search.slice(0, 6), document.getElementById("recommendations"), false);
+        });
+    }
+
+    function getFavorites() {
+      return JSON.parse(localStorage.getItem('favorites')) || [];
+    }
+
+    function saveFavorites(favorites) {
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+      loadFavorites();
+    }
+
+    function loadFavorites() {
+      const favorites = getFavorites();
+      favoritesDiv.innerHTML = "";
+      favorites.forEach(movie => {
+        const div = document.createElement('div');
+        div.classList.add('movie');
+        div.innerHTML = `
+          <img src="${movie.Poster}">
+          <h4>${movie.Title}</h4>
+        `;
+        favoritesDiv.appendChild(div);
+      });
+    }
+
+    function clearFavorites() {
+      localStorage.removeItem('favorites');
+      loadFavorites();
+    }
+
+    loadFavorites();
+  </script>
+</body>
+</html>
